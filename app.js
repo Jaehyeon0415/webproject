@@ -1,11 +1,17 @@
+// express framework
 var express = require('express');
+// path
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+// cookie
 var cookieParser = require('cookie-parser');
+// for POST method
 var bodyParser = require('body-parser');
+// 파일을 제어하는 모듈
 var sassMiddleware = require('node-sass-middleware');
 
+// 경로를 설정
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -14,6 +20,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// html예쁘게 만들기
+app.locals.pretty = true;
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
