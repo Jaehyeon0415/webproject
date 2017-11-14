@@ -4,7 +4,7 @@ block content
     |
     .row.col-lg-8.col-md-6.col-sm-10.mx-auto
         h1.align-center.mb-3 User
-        .form(action='/users', method='POST').col-lg-12.col-md-12.col-sm-10.mx-auto.mb-3
+        form.form(action='/users', method='POST').col-lg-12.col-md-12.col-sm-10.mx-auto.mb-3
             .form-group
                 label(for='name') Name
                 input.form-control(type='text' id='name' name='name' placeholder='Enter your name')
