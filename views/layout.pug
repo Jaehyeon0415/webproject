@@ -11,6 +11,14 @@ html(lan="ko")
     |
     link(rel='stylesheet', href='/stylesheets/style.sass')
     |
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    |
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js')
+    |
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
+    |
+    script(src='/javascripts/application.js')
+    |
     title JaeHyun
 
   body
@@ -18,3 +26,6 @@ html(lan="ko")
       include ./includes/topnav
       include ./includes/main_img
     block content
+
+    block footer
+      include ./includes/footer

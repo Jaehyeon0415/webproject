@@ -4,18 +4,22 @@ block content
     |
     .row.col-lg-8.col-md-6.col-sm-10.mx-auto
         h1.align-center.mb-3 User
-        .form.col-lg-12.col-md-12.col-sm-10.mx-auto.mb-3
+        .form(action='/users', method='POST').col-lg-12.col-md-12.col-sm-10.mx-auto.mb-3
             .form-group
-                label(for='exampleInputEmail1') Email address
-                input.form-control#exampleInputEmail1(type='email' aria-describedby='emailHelp' placeholder='Enter email')
+                label(for='name') Name
+                input.form-control(type='text' id='name' name='name' placeholder='Enter your name')
+            |
+            .form-group
+                label(for='email1') Email address
+                input.form-control#exampleInputEmail1(type='email' name='email' aria-describedby='emailHelp' placeholder='Enter email')
                 small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
             |
             .form-group
-                label(for='exampleInputPassword1') Password
-                input.form-control#exampleInputPassword1(type='password' placeholder='Password')
+                label(for='password') Password
+                input.form-control#exampleInputPassword1(type='password' name='password' placeholder='Password')
             |
             .form-group
-                label(for='exampleInputPassword2') Password Confirmation
-                input.form-control#exampleInputPassword2(type='password' placeholder='Password')
+                label(for='password_confirmation') Password Confirmation
+                input.form-control#exampleInputPassword2(type='password' name='password_confirmation' placeholder='Password')
             |
-            button.btn.btn-primary(type='submit') Register
+            button.btn.btn-primary.float-right(type='submit') Register
