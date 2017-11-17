@@ -8,6 +8,7 @@ var schema = new Schema({
   content: {type: String, trim: true, required: true},
   locate:[String],
   tags: [String],
+  img: [String],
   numLikes: {type: Number, default: 0},
   numAnswers: {type: Number, default: 0},
   numReads: {type: Number, default: 0},
