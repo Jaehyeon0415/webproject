@@ -54,18 +54,15 @@ form(method="post").form-group
   .row
     .col-lg-6
       .input-group
-        
         span.input-group-addon
-          input(type="checkbox" aria-label="Checkbox for following text input")
+          input(type="checkbox" name="free" aria-label="Checkbox for following text input")
           h5.ml-2.text-center 무료 행사
     |
     .col-lg-6
       .input-group
         span.input-group-addon
-          input(type="checkbox" aria-label="Checkbox for following text input")
+          input(type="checkbox" name="charge" aria-label="Checkbox for following text input")
           h5.ml-2.text-center 유료 행사
-        input.form-control(type="text" aria-label="Text input with checkbox" placeholder="How much?")
+        input.form-control(type="text" aria-label="Text input with checkbox" name="money" placeholder="How much?")
 .form-group
-  label(for="tags")
-    h2 Tags
-  input.form-control(type="text", name="tags", placeholder="tags separated by spaces", value=question.tags ? question.tags.join(" ") : "")
+  
