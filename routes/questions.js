@@ -97,7 +97,7 @@ router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
     req.flash('danger', 'Not exist question');
     return res.redirect('back');
   }
-
+// 후기 남기기.
   var answer = new Answer({
     author: user._id,
     question: question._id,
@@ -106,7 +106,7 @@ router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
   await answer.save();
   question.numAnswers++;
   await question.save();
-
+  
   req.flash('success', 'Successfully answered');
   res.redirect(`/questions/${req.params.id}`);
 }));

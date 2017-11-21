@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-//var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -34,21 +34,19 @@ app.locals.querystring = require('querystring');
 // mongodb connect
 //=======================================================
 mongoose.Promise = global.Promise; // ES6 Native Promise를 mongoose에서 사용한다.
-const connStr = 'mongodb://localhost/mjdb2';
+const connStr = 'mongodb://localhost/webproject1';
 // 아래는 mLab을 사용하는 경우의 예: 본인의 접속 String으로 바꾸세요.
 //const connStr = 'mongodb://cant147:wogus2007!@ds111336.mlab.com:11336/webproject';
 mongoose.connect(connStr, {useMongoClient: true });
 mongoose.connection.on('error', console.error);
 
 // Favicon은 웹사이트의 대표 아이콘입니다. Favicon을 만들어서 /public에 둡시다.
-// https://www.favicon-generator.org/ 여기서 만들어볼 수 있어요.
-/*
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-*/
+// https://www.favicon-generator.org/ 여기서 만들어볼 수 있어요
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(logger('dev'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
 
 // _method를 통해서 method를 변경할 수 있도록 함. PUT이나 DELETE를 사용할 수 있도록.
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}));

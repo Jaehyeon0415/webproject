@@ -13,10 +13,12 @@ var schema = new Schema({
   toObject: {virtuals: true}
 });
 
+// 비밀번호 넣어줌
 schema.methods.generateHash = function(password) {
   return bcrypt.hash(password, 10); // return Promise
 };
 
+// 비밀번호가 같은지 확인
 schema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password); // return Promise
 };

@@ -1,15 +1,71 @@
 .form-group
-  label(for="title") Title
+  label(for="title")
+    h2 제목
   input.form-control(type="text", name="title", placeholder="What's your Event Title?", value=question.title)
+form
+  .form-group
+    label(for="exampleFormControlFile1")
+      h2 이미지
+    input.form-control-file#exampleFormControlFile1(type="file")
 .form-group
-  label(for="locate") locate
+  label(for="locate")
+    h2 장소
   input.form-control(type="text", name="locate", placeholder="Please write address", value=question.locate)
 .form-group
-  label(for="tags") Tags
-  input.form-control(type="text", name="tags", placeholder="tags separated by spaces", value=question.tags ? question.tags.join(" ") : "")
-form( method="post").form-group
-  label(for="question") Instruction
-  textarea.form-control#mytextarea(name="content", rows="5")= question.content
+  form
+    h4 날짜
+    .row.col-12
+      .col-4
+        label(for="date")
+        input.form-control(type="text", name="date" placeholder="Date")
+      .col-4
+        label(for="Start_time")
+        input.form-control(type="text", name="Start_time" placeholder="Start time")
+      .col-4
+        label(for="Finish_time")
+        input.form-control(type="text", name="Finish_time" placeholder="Finish time")
+    //small#emailHelp.form-text.text-muted ex) 오전 5:30 - 530, 오후 5:30 - 1730
+form(method="post").form-group
+  label(for="content1")
+    h2 상세 설명
+  textarea.form-control#editor1(name="content1", value=question.content)
+  script.
+    ClassicEditor
+        .create( document.querySelector( '#editor1' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+
 .form-group
-  label(for="tags") Tags
+  label(for="group_name")
+    h2 등록 조직 이름
+  input.form-control(type="text", name="group_name", placeholder="Write group name", value=question.group_name)
+form(method="post").form-group
+  label(for="content2")
+    h2 등록 조직 설명
+  textarea.form-control#editor2(name="content2", value=question.group_content)
+  script.
+    ClassicEditor
+        .create( document.querySelector( '#editor2' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+.form-group
+  .row
+    .col-lg-6
+      .input-group
+        
+        span.input-group-addon
+          input(type="checkbox" aria-label="Checkbox for following text input")
+          h5.ml-2.text-center 무료 행사
+    |
+    .col-lg-6
+      .input-group
+        span.input-group-addon
+          input(type="checkbox" aria-label="Checkbox for following text input")
+          h5.ml-2.text-center 유료 행사
+        input.form-control(type="text" aria-label="Text input with checkbox" placeholder="How much?")
+.form-group
+  label(for="tags")
+    h2 Tags
   input.form-control(type="text", name="tags", placeholder="tags separated by spaces", value=question.tags ? question.tags.join(" ") : "")
