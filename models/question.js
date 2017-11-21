@@ -15,6 +15,10 @@ var schema = new Schema({
   content2: [String],
   // 날짜
   date: {type: String, trim: true, required: true},
+  // 시작 시간
+  start_time: {type: String, trim: true, required: true},
+  // 끝나는 시간
+  finish_time: {type: String, trim: true, required: true},
   // 장소
   locate:{type: String, trim: true, required: true},
   tags: [String],

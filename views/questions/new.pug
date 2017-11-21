@@ -3,7 +3,8 @@ extends ../layout
 block content
   .container
     h1.main-title.mb-5.mt-3 이벤트 생성
-    form(action="/questions", method="POST")
+    //(action="/questions", method="POST")
+    form(action='/questions/save' method="POST")
       include _form
       button.btn.btn-outline-primary(type="submit") Post Your Event
 

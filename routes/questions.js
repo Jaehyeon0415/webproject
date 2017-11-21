@@ -1,9 +1,24 @@
 const express = require('express');
 const Question = require('../models/question');
+var User  = require('../models/user');
 const Answer = require('../models/answer'); 
 const catchErrors = require('../lib/async-error');
+var formidable = require('formidable');
+var bodyParser = require('body-parser');
 
 const router = express.Router();
+
+router.use(bodyParser.urlencoded({ extended: false }));
+
+// 나중에 정보 수정
+// var AWS = require('aws-sdk');
+// AWS.config.region = 'ap-northeast-2';
+
+// AWS.config.update({
+//     accessKeyId: "AKIAJ2PHON3I3WMHN2VQ",
+//     secretAccessKey: "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",
+//     region: 'ap-northeast-2'
+// });
 
 // 동일한 코드가 users.js에도 있습니다.
 function needAuth(req, res, next) {
@@ -86,8 +101,10 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
               group_name:fields.group_name,
               content2:fields.content2,
               date:fields.date,
+              start_time:fields.start_time,
+              finish_time:fields.finish_time,
               locate:fields.locate,
-              img:url,
+              //img:url,
               //img_key:img_name
           });
          
@@ -108,7 +125,7 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   res.render('questions/edit', {question: question});
 }));
 
-// 후기 작성
+// 이벤트 세부 정보
 router.get('/:id', catchErrors(async (req, res, next) => {
   const question = await Question.findById(req.params.id).populate('author');
   const answers = await Answer.find({question: question.id}).populate('author');

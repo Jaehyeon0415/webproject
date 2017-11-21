@@ -4,9 +4,9 @@
   input.form-control(type="text", name="title", placeholder="What's your Event Title?", value=question.title)
 form
   .form-group
-    label(for="exampleFormControlFile1")
+    label(for="picture")
       h2 이미지
-    input.form-control-file#exampleFormControlFile1(type="file")
+    input.form-control-file#picture(type="file", name="picture")
 .form-group
   label(for="locate")
     h2 장소
@@ -19,11 +19,11 @@ form
         label(for="date")
         input.form-control(type="text", name="date" placeholder="Date")
       .col-4
-        label(for="Start_time")
-        input.form-control(type="text", name="Start_time" placeholder="Start time")
+        label(for="start_time")
+        input.form-control(type="text", name="start_time" placeholder="Start time")
       .col-4
-        label(for="Finish_time")
-        input.form-control(type="text", name="Finish_time" placeholder="Finish time")
+        label(for="sinish_time")
+        input.form-control(type="text", name="sinish_time" placeholder="Finish time")
     //small#emailHelp.form-text.text-muted ex) 오전 5:30 - 530, 오후 5:30 - 1730
 form(method="post").form-group
   label(for="content1")
@@ -64,5 +64,4 @@ form(method="post").form-group
           input(type="checkbox" name="charge" aria-label="Checkbox for following text input")
           h5.ml-2.text-center 유료 행사
         input.form-control(type="text" aria-label="Text input with checkbox" name="money" placeholder="How much?")
-.form-group
   
