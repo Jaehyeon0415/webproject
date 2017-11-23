@@ -43,10 +43,11 @@ mongoose.connection.on('error', console.error);
 // Favicon은 웹사이트의 대표 아이콘입니다. Favicon을 만들어서 /public에 둡시다.
 // https://www.favicon-generator.org/ 여기서 만들어볼 수 있어요
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // _method를 통해서 method를 변경할 수 있도록 함. PUT이나 DELETE를 사용할 수 있도록.
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}));
