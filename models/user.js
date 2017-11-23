@@ -5,10 +5,15 @@ const mongoosePaginate = require('mongoose-paginate');
 
 
 var schema = new Schema({
+  // 이름
   name: {type: String, required: true, trim: true},
+  // 이메일
   email: {type: String, required: true, index: true, unique: true, trim: true},
+  // 비밀번호
   password: {type: String},
+  // 페이스북 정보
   facebook: {id: String, token: String, photo: String},
+  // 만든 날짜
   createdAt: {type: Date, default: Date.now}
 }, {
   toJSON: { virtuals: true},

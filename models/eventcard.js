@@ -24,6 +24,7 @@ var schema = new Schema({
   tags: [String],
   // 이미지
   img: [String],
+
   numLikes: {type: Number, default: 0},
   numAnswers: {type: Number, default: 0},
   numReads: {type: Number, default: 0},
@@ -35,6 +36,6 @@ var schema = new Schema({
   toObject: {virtuals: true}
 });
 schema.plugin(mongoosePaginate);
-var Question = mongoose.model('Question', schema);
+var Eventcard = mongoose.model('Eventcard', schema);
 
-module.exports = Question;
+module.exports = Eventcard;

@@ -1,0 +1,17 @@
+.locate= eventcard.locate
+.tags.badges
+  each tag in eventcard.tags
+    span.badge.badge-phill.badge-secondary= tag
+    | 
+.row
+  .col-sm
+    .numbers.
+      #[span.number.num-votes= eventcard.numLikes] likes,
+      #[span.number.num-answers= eventcard.numAnswers] answers,
+      #[span.number.num-views= eventcard.numReads] reads
+  .col-sm
+    .author
+      | asked on #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
+      if eventcard.author
+        | 
+        | by #[a(href=`/users/${eventcard.author.id}`)= eventcard.author.name] 

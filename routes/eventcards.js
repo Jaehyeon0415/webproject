@@ -1,5 +1,5 @@
 const express = require('express');
-const Question = require('../models/question');
+const Eventcard = require('../models/eventcard');
 var User  = require('../models/user');
 const Answer = require('../models/answer'); 
 const catchErrors = require('../lib/async-error');
@@ -44,17 +44,17 @@ router.get('/', catchErrors(async (req, res, next) => {
       {content: {'$regex': term, '$options': 'i'}}
     ]};
   }
-  const questions = await Question.paginate(query, {
+  const eventcards = await Eventcard.paginate(query, {
     sort: {createdAt: -1}, 
     populate: 'author', 
     page: page, limit: limit
   });
-  res.render('questions/index', {questions: questions, term: term, query: req.query});
+  res.render('eventcards/index', {eventcards: eventcards, term: term, query: req.query});
 }));
 
 // 이벤트 작성
 router.get('/new', needAuth, (req, res, next) => {
-  res.render('questions/new', {question: {}});
+  res.render('eventcards/new', {eventcard: {}});
 });
 
 // 이벤트 post
@@ -94,7 +94,7 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
       
       // 방 내용 디비에 업로드
       User.findById(UserId, function(err,user){
-          var newQuestion = Question({
+          var newEventcard = Eventcard({
               author:user_obj,
               title:fields.title,
               content1:fields.content1,
@@ -109,7 +109,7 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
           });
          
       
-          newQuestion.save(function(err) {
+          newEventcard.save(function(err) {
               if (err) {
                   return next(err);
               } else {
@@ -121,78 +121,78 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
 }));
 // 회원정보 수정
 router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
-  const question = await Question.findById(req.params.id);
-  res.render('questions/edit', {question: question});
+  const eventcard = await Eventcard.findById(req.params.id);
+  res.render('eventcards/edit', {eventcard: eventcard});
 }));
 
 // 이벤트 세부 정보
 router.get('/:id', catchErrors(async (req, res, next) => {
-  const question = await Question.findById(req.params.id).populate('author');
-  const answers = await Answer.find({question: question.id}).populate('author');
-  question.numReads++;    // TODO: 동일한 사람이 본 경우에 Read가 증가하지 않도록???
+  const eventcard = await Eventcard.findById(req.params.id).populate('author');
+  const answers = await Answer.find({eventcard: eventcard.id}).populate('author');
+  eventcard.numReads++;    // TODO: 동일한 사람이 본 경우에 Read가 증가하지 않도록???
 
-  await question.save();
-  res.render('questions/show', {question: question, answers: answers});
+  await eventcard.save();
+  res.render('eventcards/show', {eventcard: eventcard, answers: answers});
 }));
 
 // 
 router.put('/:id', catchErrors(async (req, res, next) => {
-  const question = await Question.findById(req.params.id);
+  const eventcard = await Eventcard.findById(req.params.id);
 
-  if (!question) {
+  if (!eventcard) {
     req.flash('danger', 'Not exist question');
     return res.redirect('back');
   }
-  question.title = req.body.title;
-  question.content = req.body.content;
-  question.tags = req.body.tags.split(" ").map(e => e.trim());
+  eventcard.title = req.body.title;
+  eventcard.content = req.body.content;
+  eventcard.tags = req.body.tags.split(" ").map(e => e.trim());
 
-  await question.save();
+  await eventcard.save();
   req.flash('success', 'Successfully updated');
-  res.redirect('/questions');
+  res.redirect('/eventcards');
 }));
 
 // 사용자 삭제
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
-  await Question.findOneAndRemove({_id: req.params.id});
+  await Eventcard.findOneAndRemove({_id: req.params.id});
   req.flash('success', 'Successfully deleted');
-  res.redirect('/questions');
+  res.redirect('/eventcards');
 }));
 
 // 이벤트 생성
 router.post('/', needAuth, catchErrors(async (req, res, next) => {
   const user = req.user;
-  var question = new Question({
+  var eventcard = new Eventcard({
     title: req.body.title,
     author: user._id,
     content: req.body.content,
     tags: req.body.tags.split(" ").map(e => e.trim()),
   });
-  await question.save();
+  await eventcard.save();
   req.flash('success', 'Successfully posted');
-  res.redirect('/questions');
+  res.redirect('/eventcards');
 }));
 
 router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
   const user = req.user;
-  const question = await Question.findById(req.params.id);
+  const eventcard = await Eventcard.findById(req.params.id);
 
-  if (!question) {
-    req.flash('danger', 'Not exist question');
+  if (!eventcard) {
+    req.flash('danger', 'Not exist event');
     return res.redirect('back');
   }
 // 후기 남기기.
   var answer = new Answer({
     author: user._id,
-    question: question._id,
+    eventcard: eventcard._id,
     content: req.body.content
   });
   await answer.save();
-  question.numAnswers++;
+  eventcard.numAnswers++;
   await question.save();
   
   req.flash('success', 'Successfully answered');
-  res.redirect(`/questions/${req.params.id}`);
+  res.redirect(`/eventcards/${req.params.id}`);
 }));
 
 

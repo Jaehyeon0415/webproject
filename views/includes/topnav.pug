@@ -10,7 +10,7 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-dark
             |
             li.nav-item.active
                 |
-                a.nav-link(href='/questions')
+                a.nav-link(href='/eventcards')
                     | Events
             |
             if(!currentUser)
@@ -29,7 +29,7 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-dark
                     |
                     .dropdown-menu(aria-labelledby="dropdownMenuButton")
                         a.dropdown-item(href=`/users/${currentUser._id}`) ID
-                        a.dropdown-item(href='/questions/new') Create Event
+                        a.dropdown-item(href='/eventcards/new') Create Event
                         a.dropdown-item(href="#") Action
                 li.nav-item.active
                     |

@@ -1,0 +1,26 @@
+extends ../layout
+
+include ../includes/_paginate
+
+block content
+  .container
+    form.form-inline.search-input-group(action='/eventcards', method='GET')
+      i.fa.fa-search
+      input.form-control.mr-sm-2(type='text', name='term', placeholder='Search', aria-label='Search', value=term)
+
+    h1.main-title 
+      | Events
+      if eventcards.total > 0
+        .small Total #{eventcards.total} eventcard(s)
+
+    if eventcards.total <= 0 
+      .alert.alert-info No Events available yet
+    else
+      .eventcards
+        each eventcard in eventcards.docs
+          .eventcard
+            a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
+            include _question
+
+      +paginate(eventcards, '/eventcards', query)
+
