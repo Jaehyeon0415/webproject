@@ -145,7 +145,7 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   }
   eventcard.title = req.body.title;
   eventcard.content = req.body.content;
-  eventcard.tags = req.body.tags.split(" ").map(e => e.trim());
+  //eventcard.tags = req.body.tags.split(" ").map(e => e.trim());
 
   await eventcard.save();
   req.flash('success', 'Successfully updated');
@@ -166,7 +166,7 @@ router.post('/', needAuth, catchErrors(async (req, res, next) => {
     title: req.body.title,
     author: user._id,
     content: req.body.content,
-    tags: req.body.tags.split(" ").map(e => e.trim()),
+    //tags: req.body.tags.split(" ").map(e => e.trim()),
   });
   await eventcard.save();
   req.flash('success', 'Successfully posted');
