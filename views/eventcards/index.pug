@@ -5,16 +5,26 @@ include ../includes/_paginate
 block content
   .container
     form.form-inline.search-input-group(action='/eventcards', method='GET')
-      i.fa.fa-search
-      input.form-control.mr-sm-2(type='text', name='term', placeholder='Search', aria-label='Search', value=term)
-
-      h1.main-title 
-        | Events
-      .eventcards
+      .row.col-lg-10.col-md-10.col-sm-12
+        .col.col-12
+          i.fa.fa-search
+          input.form-control.mr-sm-2(type='text', name='term', placeholder='Search', aria-label='Search', value=term)
+        .col.col-12
+          h1.main-title
+            | Events
+      .row.col-lg-10.col-md-10.col-sm-12.mx-auto
         each eventcard in eventcards
-          .eventcard
-            a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
-            include _question
+          .col.col-12.mx-auto
+            .card.mb-4
+              img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
+              h1
+                a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
+              .card-body
+                p=eventcard.name
+                p=eventcard.start_time
+                p=eventcard.finish_time
+                 
+                  //include _question
 
       +paginate(eventcards, '/eventcards', query)
 
