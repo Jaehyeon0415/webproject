@@ -33,23 +33,9 @@ function needAuth(req, res, next) {
 /* GET questions listing. */
 // event들이 나오는 페이지.
 router.get('/', catchErrors(async (req, res, next) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-
-  var query = {};
-  const term = req.query.term;
-  if (term) {
-    query = {$or: [
-      {title: {'$regex': term, '$options': 'i'}},
-      {content: {'$regex': term, '$options': 'i'}}
-    ]};
-  }
-  const eventcards = await Eventcard.paginate(query, {
-    sort: {createdAt: -1}, 
-    populate: 'author', 
-    page: page, limit: limit
-  });
-  res.render('eventcards/index', {eventcards: eventcards, term: term, query: req.query});
+  var eventcards = await Eventcard.find({})
+  console.log(eventcards)
+  res.render('eventcards/index', {eventcards : eventcards});
 }));
 
 // 이벤트 작성
@@ -65,7 +51,7 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
   form.parse(req, function(err, fields, files){
       console.log(files);
       // var url;
-      // const S3_Bucket = 'jibang';
+      // const S3_Bucket = '';
       // const img_name = files.roomimg.name;
       const UserId = req.user.id;
 
