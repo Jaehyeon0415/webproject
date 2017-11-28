@@ -12,7 +12,7 @@ var schema = new Schema({
   //등록 조직 이름
   group_name: {type: String, trim: true, required: true},
   // 등록 조직 설명
-  content2: [String],
+  content2: {type: String, trim: true},
   // 날짜
   date: {type: String, trim: true, required: true},
   // 시작 시간

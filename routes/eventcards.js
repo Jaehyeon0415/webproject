@@ -1,5 +1,5 @@
 const express = require('express');
-const Eventcard = require('../models/eventcard');
+var Eventcard = require('../models/eventcard');
 var User  = require('../models/user');
 const Answer = require('../models/answer'); 
 const catchErrors = require('../lib/async-error');
@@ -7,7 +7,6 @@ var formidable = require('formidable');
 var bodyParser = require('body-parser');
 
 const router = express.Router();
-
 router.use(bodyParser.urlencoded({ extended: false }));
 
 // 나중에 정보 수정
@@ -45,67 +44,24 @@ router.get('/new', needAuth, (req, res, next) => {
 
 // 이벤트 post
 router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
-  // 이미지를 console.log로 출력해본다
-  var user_obj = await User.findById(req.user.id);
-  var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files){
-      console.log(files);
-      // var url;
-      // const S3_Bucket = '';
-      // const img_name = files.roomimg.name;
-      const UserId = req.user.id;
-
-      // if(img_name != ''){
-      //     // 이미지 업로드
-      //     var s3 = new AWS.S3();
-      //     var params = {
-      //          Bucket: S3_Bucket,
-      //          Key:img_name,
-      //          ACL:'public-read',
-      //          Body: require('fs').createReadStream(files.roomimg.path)
-      //     }
-      //     s3.upload(params, function(err, data){
-      //          var result='';
-      //          if(err)
-      //             // result = 'Fail';
-      //             console.log(err);
-      //          else
-      //             console.log(data);
-      //     });
-      //     // 업로드 된 이미지 URL가지고 오기
-      //     url = `https://${S3_Bucket}.s3.amazonaws.com/${img_name}`;    
-      // }else{
-      //     url = "#";
-      // }
-      
-      // 방 내용 디비에 업로드
-      User.findById(UserId, function(err,user){
-          var newEventcard = Eventcard({
-              author:user_obj,
-              title:fields.title,
-              content1:fields.content1,
-              group_name:fields.group_name,
-              content2:fields.content2,
-              date:fields.date,
-              start_time:fields.start_time,
-              finish_time:fields.finish_time,
-              locate:fields.locate,
-              //img:url,
-              //img_key:img_name
-          });
-         
-      
-          newEventcard.save(function(err) {
-              if (err) {
-                  return next(err);
-              } else {
-                  res.redirect('/');
-              }
-          });
-      });
+  console.log("postpost");
+  var eventcard = new Eventcard({
+    title : req.body.title,
+    content1 : req.body.content1,
+    group_name : req.body.group_name,
+    content2 : req.body.content2,
+    date : req.body.date,
+    start_time : req.body.start_time,
+    finish_time : req.body.finish_time,
+    locate : req.body.locate,
+    img : req.body.img
   });
-}));
-// 회원정보 수정
+  eventcard.user_id = req.user.id;
+  await eventcard.save();
+  res.redirect('/');
+ }));
+
+// 이벤트 편집
 router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   const eventcard = await Eventcard.findById(req.params.id);
   res.render('eventcards/edit', {eventcard: eventcard});
@@ -145,19 +101,19 @@ router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
   res.redirect('/eventcards');
 }));
 
-// 이벤트 생성
-router.post('/', needAuth, catchErrors(async (req, res, next) => {
-  const user = req.user;
-  var eventcard = new Eventcard({
-    title: req.body.title,
-    author: user._id,
-    content: req.body.content,
-    //tags: req.body.tags.split(" ").map(e => e.trim()),
-  });
-  await eventcard.save();
-  req.flash('success', 'Successfully posted');
-  res.redirect('/eventcards');
-}));
+// // 이벤트 생성
+// router.post('/', needAuth, catchErrors(async (req, res, next) => {
+//   const user = req.user;
+//   var eventcard = new Eventcard({
+//     title: req.body.title,
+//     author: user._id,
+//     content: req.body.content,
+//     //tags: req.body.tags.split(" ").map(e => e.trim()),
+//   });
+//   await eventcard.save();
+//   req.flash('success', 'Successfully posted');
+//   res.redirect('/eventcards');
+// }));
 
 router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
   const user = req.user;

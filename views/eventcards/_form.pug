@@ -2,17 +2,15 @@
   label(for="title")
     h2 제목
   input.form-control(type="text", name="title", placeholder="What's your Event Title?", value=eventcard.title)
-form
-  .form-group
-    label(for="picture")
-      h2 이미지
-    input.form-control-file#picture(type="file", name="picture")
+.form-group
+  label(for="picture")
+    h2 이미지
+  input.form-control-file#picture(type="file", name="picture")
 .form-group
   label(for="locate")
     h2 장소
   input.form-control(type="text", name="locate", placeholder="Please write address", value=eventcard.locate)
 .form-group
-  form
     h4 날짜
     .row.col-12
       .col-4
@@ -23,12 +21,12 @@ form
         input.form-control(type="text", name="start_time" placeholder="Start time")
       .col-4
         label(for="sinish_time")
-        input.form-control(type="text", name="sinish_time" placeholder="Finish time")
+        input.form-control(type="text", name="finish_time" placeholder="Finish time")
     //small#emailHelp.form-text.text-muted ex) 오전 5:30 - 530, 오후 5:30 - 1730
-form(method="post").form-group
+.form-group
   label(for="content1")
     h2 상세 설명
-  textarea.form-control#editor1(name="content1", value=eventcard.content)
+  textarea.form-control#editor1(name="content1", value=eventcard.content1)
   script.
     ClassicEditor
         .create( document.querySelector( '#editor1' ) )
@@ -40,10 +38,10 @@ form(method="post").form-group
   label(for="group_name")
     h2 등록 조직 이름
   input.form-control(type="text", name="group_name", placeholder="Write group name", value=eventcard.group_name)
-form(method="post").form-group
+.form-group
   label(for="content2")
     h2 등록 조직 설명
-  textarea.form-control#editor2(name="content2", value=eventcard.group_content)
+  textarea.form-control#editor2(name="content2", value=eventcard.content2)
   script.
     ClassicEditor
         .create( document.querySelector( '#editor2' ) )
