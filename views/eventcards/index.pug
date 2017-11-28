@@ -8,16 +8,10 @@ block content
       i.fa.fa-search
       input.form-control.mr-sm-2(type='text', name='term', placeholder='Search', aria-label='Search', value=term)
 
-    h1.main-title 
-      | Events
-      if eventcards.total > 0
-        .small Total #{eventcards.total} eventcard(s)
-
-    if eventcards.total <= 0 
-      .alert.alert-info No Events available yet
-    else
+      h1.main-title 
+        | Events
       .eventcards
-        each eventcard in eventcards.docs
+        each eventcard in eventcards
           .eventcard
             a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
             include _question
