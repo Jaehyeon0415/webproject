@@ -1,12 +1,8 @@
 .locate= eventcard.locate
-//- .tags.badges
-//-   each tag in eventcard.tags
-//-     span.badge.badge-phill.badge-secondary= tag
-//-     | 
 .row
   .col-sm
     .author
       | Create at #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
-      if eventcard.author
-        | 
-        | by #[a(href=`/users/${eventcard.author.id}`)= eventcard.author.name] 
+      //- if eventcard.author
+      //-   | 
+      //-   | by #[a(href=`/users/${eventcard.author.id}`)= eventcard.author.name] 

@@ -1,30 +1,49 @@
 extends ../layout
 
 block content
-  .container
-    h1.main-title= question.title
+  .row.col-lg-12.col-md-12.col-sm-12
+    .col.col-lg-8.col-md-8.col-sm-12
+      .card
+          img.card-img-top(src='...' alt='Card image cap')
+    #map.col.col-lg-4.col-md-4
 
-    .eventcard.show
-      include _question
 
-      .buttons
-        button.btn.btn-primary #[i.fa.fa-thumbs-up] Like
-        if currentUser && eventcard.author.id == currentUser.id
-          | 
-          a.btn.btn-outline-secondary(href=`/eventcards/${eventcard.id}/edit`) Edit
-          | 
-          a.btn.btn-outline-danger.need-confirm-btn(href=`/eventcards/${eventcard.id}?_method=delete`) Delete
-      
-    if eventcard.numAnswers > 0
-      hr
-      h3 #{eventcard.numAnswers} Answer(s)
-      .answers.show
-        each answer in answers
-          include _answer
-
-    form(action=`/eventcards/${eventcard.id}/answers`, method='POST')
-      .form-group
-        label(for='answer') Your Answer
-        textarea.form-control(name="content", rows="5")
-      button.btn.btn-primary(type="submit") Post Your Answer
-
+  .row.col-lg-12
+    .col-lg-8.col-md-6.col-sm-12.mt-4
+        h1
+            p.mb-4=eventcard.title
+        |
+        .mx-auto.border.border-left-0.border-right-0
+            h2.show-needMargin.mb-4.mt-4 상세정보
+                table.table.table-bordered.m-3.mx-auto
+                    thead
+                    tbody
+                        tr
+                            |
+                            th 작성자 :
+                            td=eventcard.author
+                        tr
+                            |
+                            th 주소 :
+                            td=eventcard.locate
+                        tr
+                            |
+                            th 날짜 :
+                            td=eventcard.date
+                        tr
+                            |
+                            th 상세 설명 :
+                            td=eventcard.content1
+        |
+        .mx-auto.border.border-left-0.border-right-0.border-top-0
+            h2.show-needMargin.mb-4.mt-4 조직
+                table.table.table-bordered.m-3.mx-auto
+                    thead
+                    tbody
+                        tr  
+                            th 등록 조직 이름 :
+                            td=eventcard.group_name
+                        tr
+                            th 등록 조직 설명 :
+                            td=eventcard.content2
+        

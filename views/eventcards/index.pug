@@ -12,18 +12,17 @@ block content
         .col.col-12
           h1.main-title
             | Events
-      .row.col-lg-10.col-md-10.col-sm-12.mx-auto
+      .row.col-12.mx-auto
         each eventcard in eventcards
-          .col.col-12.mx-auto
+          .col.col-lg-4.col-md-6.col-sm-12.mx-auto
             .card.mb-4
               img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
-              h1
+              h1.ml-3
                 a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
               .card-body
-                p=eventcard.name
-                p=eventcard.start_time
-                p=eventcard.finish_time
-                 
+                
+                p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+                p By #{eventcard.author}
                   //include _question
 
       +paginate(eventcards, '/eventcards', query)

@@ -44,8 +44,9 @@ router.get('/new', needAuth, (req, res, next) => {
 
 // 이벤트 post
 router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
-  console.log("postpost");
+  //console.log("postpost");
   var eventcard = new Eventcard({
+    //author: req.user.id,
     title : req.body.title,
     content1 : req.body.content1,
     group_name : req.body.group_name,
@@ -56,7 +57,7 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
     locate : req.body.locate,
     img : req.body.img
   });
-  eventcard.user_id = req.user.id;
+  eventcard.author = req.user.id;
   await eventcard.save();
   res.redirect('/');
  }));
