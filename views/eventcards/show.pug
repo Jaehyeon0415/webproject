@@ -1,49 +1,147 @@
-extends ../layout
+doctype html
+html(lan="ko")
+  head
+    meta(charset='UTF-8')
+    |
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    |
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    |
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css', integrity='sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M', crossorigin='anonymous')
+    |
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+    |
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    |
+    title JaeHyun
 
-block content
-  .row.col-lg-12.col-md-12.col-sm-12
-    .col.col-lg-8.col-md-8.col-sm-12
-      .card
-          img.card-img-top(src='...' alt='Card image cap')
-    #map.col.col-lg-4.col-md-4
-
-
-  .row.col-lg-12
-    .col-lg-8.col-md-6.col-sm-12.mt-4
-        h1
-            p.mb-4=eventcard.title
+  body
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+        a.navbar-brand(href='/')
+            | JaeHyun
+        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNavDropdown' aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
         |
-        .mx-auto.border.border-left-0.border-right-0
-            h2.show-needMargin.mb-4.mt-4 상세정보
-                table.table.table-bordered.m-3.mx-auto
-                    thead
-                    tbody
-                        tr
-                            |
-                            th 작성자 :
-                            td=eventcard.author
-                        tr
-                            |
-                            th 주소 :
-                            td=eventcard.locate
-                        tr
-                            |
-                            th 날짜 :
-                            td=eventcard.date
-                        tr
-                            |
-                            th 상세 설명 :
-                            td=eventcard.content1
-        |
-        .mx-auto.border.border-left-0.border-right-0.border-top-0
-            h2.show-needMargin.mb-4.mt-4 조직
-                table.table.table-bordered.m-3.mx-auto
-                    thead
-                    tbody
-                        tr  
-                            th 등록 조직 이름 :
-                            td=eventcard.group_name
-                        tr
-                            th 등록 조직 설명 :
-                            td=eventcard.content2
-        
+        #navbarNavDropdown.collapse.navbar-collapse.justify-content-end
+            ul.navbar-nav
+                |
+                li.nav-item.active
+                    |
+                    a.nav-link(href='/eventcards')
+                        | Events
+                |
+                if(!currentUser)
+                    li.nav-item.active
+                        |
+                        a.nav-link(href='/signin')
+                            | SignIn
+                    li.nav-item.active
+                        |
+                        a.nav-link(href='/users/new')
+                            | SignUp
+                else
+                    li.nav-item.active.dropdown
+                        button.btn.btn-dark.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                            | Myprofile
+                        |
+                        .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                            a.dropdown-item(href=`/users/${currentUser._id}`) ID
+                            a.dropdown-item(href='/eventcards/new') Create Event
+                            a.dropdown-item(href="#") Action
+                    li.nav-item.active
+                        |
+                        a.nav-link(href='/signout')
+                            | SignOut
+
+    .row.col-lg-12.col-md-12.col-sm-12
+        .col.col-lg-8.col-md-8.col-sm-12.mt-3
+            .card
+                img.card-img-top(src='...' alt='Card image cap')
+
+        #map.col.col-lg-4.col-md-4.mt-3.showmap
+            script(type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f17f13a2501e093453f66bc822645a83&libraries=services")
+            script.
+                var container = document.getElementById('map');
+                var options = {
+                    center: new daum.maps.LatLng(33.450701, 126.570667),
+                    level: 3
+                };
+                var map = new daum.maps.Map(container, options);
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    };  
+                // 지도를 생성합니다    
+                var map = new daum.maps.Map(mapContainer, mapOption); 
+                // 주소-좌표 변환 객체를 생성합니다
+                var geocoder = new daum.maps.services.Geocoder();
+                // 주소로 좌표를 검색합니다
+                geocoder.addressSearch(`#{eventcard.location}`, function(result, status) {
+                    // 정상적으로 검색이 완료됐으면 
+                    if (status === daum.maps.services.Status.OK) {
+                        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+                        // 결과값으로 받은 위치를 마커로 표시합니다
+                        var marker = new daum.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                        var infowindow = new daum.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+
+                                        `#{eventcard.title}` +'</div>'
+                        });
+                        infowindow.open(map, marker);
+                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                        map.setCenter(coords);
+                    } 
+                });    
+
+    .row.col-lg-12
+        .col-lg-8.col-md-6.col-sm-12.mt-4
+            h1.mb-4=eventcard.title
+            |
+            .mx-auto.border.border-left-0.border-right-0
+                h2.show-needMargin.mb-4.mt-4 상세정보
+                    table.table.table-bordered.m-3.mx-auto
+                        thead
+                        tbody
+                            tr
+                                |
+                                th 작성자 :
+                                td=eventcard.author.name
+                            tr
+                                |
+                                th 주소 :
+                                td=eventcard.locate
+                            tr
+                                |
+                                th 날짜 :
+                                td=eventcard.date
+                            tr
+                                |
+                                th 상세 설명 :
+                                td=eventcard.content1
+            |
+            .mx-auto.border.border-left-0.border-right-0.border-top-0
+                h2.show-needMargin.mb-4.mt-4 조직
+                    table.table.table-bordered.m-3.mx-auto
+                        thead
+                        tbody
+                            tr  
+                                th 등록 조직 이름 :
+                                td=eventcard.group_name
+                            tr
+                                th 등록 조직 설명 :
+                                td=eventcard.content2
+
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    |
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js')
+    |
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
+    |
+    script(src='https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js')
+    |
+    script(src='/javascripts/application.js')
+            
