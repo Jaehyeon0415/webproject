@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
-
+var findOrCreate = require('mongoose-findorcreate');
 
 var schema = new Schema({
   // 이름
@@ -13,6 +13,8 @@ var schema = new Schema({
   password: {type: String},
   // 페이스북 정보
   facebook: {id: String, token: String, photo: String},
+  // 카카오톡 정보
+  kakao: {id: String, token: String, photo: String},
   // 만든 날짜
   createdAt: {type: Date, default: Date.now}
 }, {
@@ -31,6 +33,7 @@ schema.methods.validatePassword = function(password) {
 };
 
 schema.plugin(mongoosePaginate);
+schema.plugin(findOrCreate);
 var User = mongoose.model('User', schema);
 
 module.exports = User;

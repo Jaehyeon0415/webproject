@@ -20,6 +20,7 @@
     "method-override": "^2.3.10",
     "moment": "^2.19.2",
     "mongoose": "^4.13.2",
+    "mongoose-findorcreate": "^2.0.0",
     "mongoose-paginate": "^5.0.3",
     "morgan": "~1.9.0",
     "node-sass-middleware": "0.9.8",

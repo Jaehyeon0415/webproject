@@ -89,8 +89,10 @@ router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
   res.redirect('/users');
 }));
 
+// 사용자 정보를 지워줌
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
   const user = await User.findOneAndRemove({_id: req.params.id});
+  //const eventcard = await Eventcard.findOneAndRemove({_id: req.body.id})
   req.flash('success', 'Deleted Successfully.');
   res.redirect('/users');
 }));
