@@ -73,7 +73,6 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
 router.get('/:id', catchErrors(async (req, res, next) => {
   const eventcard = await Eventcard.findById(req.params.id).populate('author');
   const answers = await Answer.find({eventcard: eventcard.id}).populate('author');
-  eventcard.numReads++;    // TODO: 동일한 사람이 본 경우에 Read가 증가하지 않도록???
 
   await eventcard.save();
   res.render('eventcards/show', {eventcard: eventcard, answers: answers});
@@ -89,7 +88,7 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   }
   eventcard.title = req.body.title;
   eventcard.content = req.body.content;
-  //eventcard.tags = req.body.tags.split(" ").map(e => e.trim());
+  
 
   await eventcard.save();
   req.flash('success', 'Successfully updated');
