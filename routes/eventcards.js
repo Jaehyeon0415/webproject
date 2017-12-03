@@ -59,6 +59,7 @@ router.post('/save',needAuth,catchErrors(async (req , res ,next) =>{
   });
   eventcard.author = req.user.id;
   await eventcard.save();
+  req.flash('success', 'Successfully updated');
   res.redirect('/');
  }));
 

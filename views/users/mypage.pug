@@ -1,5 +1,34 @@
-extends layout
+extends ../layout
 
 block content
+    .col-lg-6.col-md-6.col-sm-12.float-left
+        h2.col-10.mt-3 내가 작성한 글
+        each eventcard in eventcards
+            .col.col-lg-12.col-md-12.col-sm-12.mx-auto
+                .card.mb-4.mt-4
+                    img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
+                    h1.ml-3
+                        a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
+                    .card-body
+                        p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+                        p By #{eventcard.author.name}
+                        a.btn.btn-primary(href=`/mypage/${eventcard._id}/edit`) 수정
+                        a.btn.btn-danger.top(href=`/mypage/${eventcard._id}?_method=DELETE`) 삭제
 
-    
+    .row.col-lg-6.col-md-6.col-sm-12.float-right.mr-2
+        h2.col-10.mt-3 Favorite
+        .col.col-lg-12.col-md-12.col-sm-12.mx-auto
+            .card.mb-4.mt-4
+                img.card-img-top.mx-auto(src='', alt='Card image cap')
+                h1.ml-3
+                    p Test입니다.
+                    //- a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
+                .card-body
+                    p Test입니다.
+                    //- p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+                    //- p By #{eventcard.author.name}
+                    
+                    //- a.btn.btn-danger.top(href=`/mypage/${eventcard._id}?_method=DELETE`) 삭제
+
+
+        

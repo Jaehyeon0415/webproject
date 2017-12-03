@@ -16,7 +16,10 @@ block content
         dt.col-sm-3 Facebook
         dd.col-sm-9
           img.img-fluid.rounded-circle(src= user.facebook.photo)
-
+      if user.kakao.id
+        dt.col-sm-3 kakao
+        dd.col-sm-9
+          img.img-fluid.rounded-circle(src= user.kakao.photo)
     hr
     p 
       a.btn.btn-outline-primary(href=`/users/${user._id}/edit`) Edit

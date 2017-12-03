@@ -10,12 +10,15 @@ var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var mongoose   = require('mongoose');
 var passport = require('passport');
+var formidable = require('formidable');
+var passportConfig = require('./lib/passport-config');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var eventcards = require('./routes/eventcards');
+var mypage = require('./routes/mypage')
 
-var passportConfig = require('./lib/passport-config');
+
 
 var app = express();
 
@@ -91,6 +94,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/users', users);
 app.use('/eventcards', eventcards);
+app.use('/mypage', mypage);
 require('./routes/auth')(app, passport);
 
 // catch 404 and forward to error handler
