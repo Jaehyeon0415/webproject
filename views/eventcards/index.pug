@@ -11,12 +11,13 @@ block content
             | Events
       .row.mx-auto
         each eventcard in eventcards
+          a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
           .col-sm
             p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
           .col-sm
             p #{eventcard.locate}
           .col-sm
-            p 작성일자 : #{eventcard.createdAt}
+            p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
             
             //- .card.mb-4
             //-   //img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
