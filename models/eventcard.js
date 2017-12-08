@@ -8,17 +8,17 @@ var schema = new Schema({
   // 제목
   title: {type: String, trim: true, required: true},
   // 상세 설명
-  content1: {type: String, trim: true, required: true},
+  content1: {type: String, trim: true},
   //등록 조직 이름
-  group_name: {type: String, trim: true, required: true},
+  group_name: {type: String, trim: true},
   // 등록 조직 설명
   content2: {type: String, trim: true},
   // 날짜
-  date: {type: String, trim: true, required: true},
+  date: {type: String, trim: true},
   // 시작 시간
-  start_time: {type: String, trim: true, required: true},
+  start_time: {type: String, trim: true},
   // 끝나는 시간
-  finish_time: {type: String, trim: true, required: true},
+  finish_time: {type: String, trim: true},
   // 장소
   locate:{type: String, trim: true, required: true},
   tags: [String],
