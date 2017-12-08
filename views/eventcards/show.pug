@@ -151,7 +151,7 @@ html(lan="ko")
                         tbody
                             tr
                                 td=eventcard.content2
-        
+
         .col-lg-4.col-md-6.col-sm-12.mt-4
             .mx-auto.border.border-left-0.border-right-0.border-top-0
                     h1.show-needMargin.mb-4 후기
@@ -171,9 +171,10 @@ html(lan="ko")
                                 | Post
             
             .mx-auto.border.border-left-0.border-right-0.border-top-0
-                button.btn.btn-outline-primary.m-2(type="submit") Register
+                form(action=`${eventcard._id}` method='post')
+                    button.btn.btn-outline-primary.m-2(type="submit") Register
                 button.btn.btn-outline-primary.m-2(type="submit") Favorite
-                a.button.btn.btn-outline-primary.m-2(href="#") Register List
+                a.button.btn.btn-outline-primary.m-2(href=``) Register List
 
 
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')

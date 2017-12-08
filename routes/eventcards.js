@@ -2,6 +2,7 @@ const express = require('express');
 var Eventcard = require('../models/eventcard');
 var User  = require('../models/user');
 const Answer = require('../models/answer');
+const Register = require('../models/register');
 const catchErrors = require('../lib/async-error');
 var formidable = require('formidable');
 var bodyParser = require('body-parser');
@@ -114,14 +115,44 @@ router.post('/:id', needAuth, catchErrors(async (req,res,next) => {
     req.flash('danger', 'Not exist event');
     return res.redirect('back');
   }
-
-  var register = new register({
+  
+  // var register = await Register.findOne({author:register._id});
+  //   console.log('!!!@!@!@!@!@', register);
+  //   if (register){
+  //     req.flash('danger', 'Already register.');
+  //     return res.redirect('back');
+  // }
+  var register = new Register({
     author: user,
     eventcard: eventcard.id,
   });
   await register.save();
   req.flash('success', 'Successfully register');
   res.redirect('back');
+}));
+
+router.post('/', catchErrors(async (req, res, next) => {
+  
+  var err = validateForm(req.body, {needPassword: true});
+  
+  if (err) {
+    req.flash('danger', err);
+    return res.redirect('back');
+  }
+  var user = await User.findOne({email: req.body.email});
+  console.log('USER???', user);
+  if (user) {
+    req.flash('danger', 'Email address already exists.');
+    return res.redirect('back');
+  }
+  user = new User({
+    name: req.body.name,
+    email: req.body.email,
+  });
+  
+  await user.save();
+  req.flash('success', 'Registered successfully. Please sign in.');
+  res.redirect('/');
 }));
 
 // 후기 남기기
