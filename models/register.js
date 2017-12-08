@@ -5,13 +5,12 @@ const Schema = mongoose.Schema;
 var schema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   eventcard_id: { type: Schema.Types.ObjectId, ref: 'Eventcard' },
-  content: {type: String, trim: true, required: true},
   createdAt: {type: Date, default: Date.now}
 }, {
   toJSON: { virtuals: true},
   toObject: {virtuals: true}
 });
 schema.plugin(mongoosePaginate);
-var Answer = mongoose.model('Answer', schema);
+var Register = mongoose.model('Register', schema);
 
-module.exports = Answer;
+module.exports = Register;

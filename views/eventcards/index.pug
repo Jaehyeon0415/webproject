@@ -19,7 +19,7 @@ block content
               .card-body
                 
                 p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
-                p By #{eventcard.author.name}
+                p #{eventcard.locate}
                   //include _question
 
       +paginate(eventcards, '/eventcards', query)

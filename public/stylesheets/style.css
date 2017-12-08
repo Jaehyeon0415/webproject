@@ -8,4 +8,20 @@
   width: 700px;
   height: 330px;
 }
-/*# sourceMappingURL=style.css.map */
+
+.show-img{
+  width: 600px;
+  height: 400px;
+}
+@media only screen and (max-device-width : 767px){
+  .main-img{
+    display : none;
+  }
+  .showmap{
+    height: 300px;
+  }
+  .show-img{
+    width: 280px;
+    height: 300px;
+  }
+}

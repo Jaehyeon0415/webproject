@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -42,10 +41,6 @@ const connStr = 'mongodb://localhost/webproject1';
 //const connStr = 'mongodb://cant147:wogus2007!@ds111336.mlab.com:11336/webproject';
 mongoose.connect(connStr, {useMongoClient: true });
 mongoose.connection.on('error', console.error);
-
-// Favicon은 웹사이트의 대표 아이콘입니다. Favicon을 만들어서 /public에 둡시다.
-// https://www.favicon-generator.org/ 여기서 만들어볼 수 있어요
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

@@ -72,8 +72,8 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
 // 이벤트 세부 정보
 router.get('/:id', catchErrors(async (req, res, next) => {
   const eventcard = await Eventcard.findById(req.params.id).populate('author');
-  const answers = await Answer.find({eventcard: eventcard.id}).populate('author');
-
+  const answers = await Answer.find({eventcard_id : eventcard._id}).populate('author');
+  console.log('!!!!!!!',answers,'!!!!!!!');
   await eventcard.save();
   res.render('eventcards/show', {eventcard: eventcard, answers: answers});
 }));
@@ -116,6 +116,25 @@ router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
 //   res.redirect('/eventcards');
 // }));
 
+// 이벤트 참가
+router.post('/:id', needAuth, catchErrors(async (req,res,next) => {
+  const user = req.user;
+  const eventcard = await Eventcard.findById(req.params.id);
+
+  if (!eventcard){
+    req.flash('danger', 'Not exist event');
+    return res.redirect('back');
+  }
+
+  var register = new register({
+    author: user,
+    eventcard: eventcard.id,
+  });
+  await register.save();
+  req.flash('success', 'Successfully register');
+  res.redirect('back');
+}));
+
 router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
   const user = req.user;
   const eventcard = await Eventcard.findById(req.params.id);
@@ -124,18 +143,15 @@ router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
     req.flash('danger', 'Not exist event');
     return res.redirect('back');
   }
-// 후기 남기기.
+// 후기 남기기
   var answer = new Answer({
-    author: user._id,
-    eventcard: eventcard._id,
+    author: user,
+    eventcard_id: eventcard.id,
     content: req.body.content
   });
   await answer.save();
-  eventcard.numAnswers++;
-  await question.save();
-  
   req.flash('success', 'Successfully answered');
-  res.redirect(`/eventcards/${req.params.id}`);
+  res.redirect('back');
 }));
 
 

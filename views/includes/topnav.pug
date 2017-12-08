@@ -1,7 +1,7 @@
 //navbar
 nav.navbar.navbar-expand-md.navbar-dark.bg-dark
     a.navbar-brand(href='/')
-        | JaeHyun
+        | Eventbrite
     button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNavDropdown' aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle navigation')
         span.navbar-toggler-icon
     |
@@ -27,10 +27,18 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-dark
                     button.btn.btn-dark.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
                         | Myprofile
                     |
-                    .dropdown-menu(aria-labelledby="dropdownMenuButton")
-                        a.dropdown-item(href=`/users/${currentUser._id}`) ID
-                        a.dropdown-item(href='/eventcards/new') Create Event
-                        a.dropdown-item(href='/mypage') Mypage
+                    if(currentUser.name != "root")
+                        .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                            a.dropdown-item(href=`/users/${currentUser._id}`) ID
+                            a.dropdown-item(href='/eventcards/new') Create Event
+                            a.dropdown-item(href='/mypage') Mypage
+                    else
+                        .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                            a.dropdown-item(href=`/users/${currentUser._id}`) ID
+                            a.dropdown-item(href='/eventcards/new') Create Event
+                            a.dropdown-item(href='/mypage') Mypage
+                            a.dropdown-item(href='#') Register List
+                     
                 li.nav-item.active
                     |
                     a.nav-link(href='/signout')

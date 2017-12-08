@@ -13,12 +13,12 @@ html(lan="ko")
     |
     link(rel='stylesheet', href='/stylesheets/style.css')
     |
-    title JaeHyun
+    title Eventbrite
 
   body
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark
         a.navbar-brand(href='/')
-            | JaeHyun
+            | Eventbrite
         button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNavDropdown' aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle navigation')
             span.navbar-toggler-icon
         |
@@ -41,24 +41,31 @@ html(lan="ko")
                             | SignUp
                 else
                     li.nav-item.active.dropdown
-                        button.btn.btn-dark.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
-                            | Myprofile
-                        |
+                    button.btn.btn-dark.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                        | Myprofile
+                    |
+                    if(currentUser.name != "root")
                         .dropdown-menu(aria-labelledby="dropdownMenuButton")
                             a.dropdown-item(href=`/users/${currentUser._id}`) ID
                             a.dropdown-item(href='/eventcards/new') Create Event
-                             a.dropdown-item(href='/mypage') Mypage
+                            a.dropdown-item(href='/mypage') Mypage
+                    else
+                        .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                            a.dropdown-item(href=`/users/${currentUser._id}`) ID
+                            a.dropdown-item(href='/eventcards/new') Create Event
+                            a.dropdown-item(href='/mypage') Mypage
+                            a.dropdown-item(href='#') Register List
                     li.nav-item.active
                         |
                         a.nav-link(href='/signout')
                             | SignOut
 
-    .row.col-lg-12.col-md-12.col-sm-12
-        .col.col-lg-8.col-md-8.col-sm-12.mt-3
+    .row.col-lg-12.mx-auto
+        .col.col-lg-8.col-md-6.col-sm-12.mt-3.mx-auto
             .card
-                img.card-img-top(src='...' alt='Card image cap')
+                img.card-img-top.show-img.mx-auto(src='../images/test.jpeg' alt='Card image cap')
 
-        #map.col.col-lg-4.col-md-4.mt-3.showmap
+        .col.col-lg-4.col-md-6.col-sm-12.mt-3.showmap.mx-auto#map
             script(type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f17f13a2501e093453f66bc822645a83&libraries=services")
             script.
                 var container = document.getElementById('map');
@@ -129,12 +136,12 @@ html(lan="ko")
                                 td=eventcard.content1
             |
             .mx-auto.border.border-left-0.border-right-0.border-top-0
-                h2.show-needMargin.mb-4.mt-4 조직
+                h2.show-needMargin.mb-4.mt-4 등록 조직
                     table.table.table-bordered.m-3.mx-auto
                         thead
                         tbody
                             tr  
-                                th 등록 조직 이름 :
+                                th 이름 :
                                 td=eventcard.group_name
             |
             .mx-auto.border.border-left-0.border-right-0.border-top-0
@@ -144,6 +151,29 @@ html(lan="ko")
                         tbody
                             tr
                                 td=eventcard.content2
+        
+        .col-lg-4.col-md-6.col-sm-12.mt-4
+            .mx-auto.border.border-left-0.border-right-0.border-top-0
+                    h1.show-needMargin.mb-4 후기
+                    |
+                    .col-lg-12.border.comment.mx-auto
+                        each answer in answers
+                            .col-lg-10.m-3.border.comment.mx-auto
+                                p=answer.author.name
+                                p.ml-4.mt-2=answer.content
+                    .col-10.mx-auto.m-2
+                        h3.show-needMarginBtn 후기 남기기
+                        |    
+                        form(action=`${eventcard._id}/answers/` method='post')
+                            input.border.border-dark.col-lg-6(type='text', name='content')
+                            button.btn.btn-outline-primary.mt-3(type="submit")
+                                |제출
+            
+            .mx-auto.border.border-left-0.border-right-0.border-top-0
+                button.btn.btn-outline-primary.m-2(type="submit") Register
+                button.btn.btn-outline-primary.m-2(type="submit") Favorite
+                a.button.btn.btn-outline-primary.m-2(href="#") Register List
+
 
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     |

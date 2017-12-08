@@ -11,7 +11,7 @@ block content
                         a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
                     .card-body
                         p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
-                        p By #{eventcard.author.name}
+                        p #{eventcard.locate}
                         a.btn.btn-primary(href=`/mypage/${eventcard._id}/edit`) 수정
                         a.btn.btn-danger.top(href=`/mypage/${eventcard._id}?_method=DELETE`) 삭제
 
