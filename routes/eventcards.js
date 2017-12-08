@@ -1,7 +1,7 @@
 const express = require('express');
 var Eventcard = require('../models/eventcard');
 var User  = require('../models/user');
-const Answer = require('../models/answer'); 
+const Answer = require('../models/answer');
 const catchErrors = require('../lib/async-error');
 var formidable = require('formidable');
 var bodyParser = require('body-parser');
@@ -73,7 +73,7 @@ router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
 router.get('/:id', catchErrors(async (req, res, next) => {
   const eventcard = await Eventcard.findById(req.params.id).populate('author');
   const answers = await Answer.find({eventcard_id : eventcard._id}).populate('author');
-  console.log('!!!!!!!',answers,'!!!!!!!');
+
   await eventcard.save();
   res.render('eventcards/show', {eventcard: eventcard, answers: answers});
 }));
@@ -95,26 +95,15 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   res.redirect('/eventcards');
 }));
 
-// 사용자 삭제
+// 이벤트 삭제
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
-  await Eventcard.findOneAndRemove({_id: req.params.id});
+  
+  var eventcard = await Eventcard.findById(req.params.id);
+  await Answer.findOneAndRemove({author : eventcard._id});
+  await eventcard.remove();
   req.flash('success', 'Successfully deleted');
   res.redirect('/eventcards');
 }));
-
-// // 이벤트 생성
-// router.post('/', needAuth, catchErrors(async (req, res, next) => {
-//   const user = req.user;
-//   var eventcard = new Eventcard({
-//     title: req.body.title,
-//     author: user._id,
-//     content: req.body.content,
-//     //tags: req.body.tags.split(" ").map(e => e.trim()),
-//   });
-//   await eventcard.save();
-//   req.flash('success', 'Successfully posted');
-//   res.redirect('/eventcards');
-// }));
 
 // 이벤트 참가
 router.post('/:id', needAuth, catchErrors(async (req,res,next) => {
@@ -135,6 +124,7 @@ router.post('/:id', needAuth, catchErrors(async (req,res,next) => {
   res.redirect('back');
 }));
 
+// 후기 남기기
 router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
   const user = req.user;
   const eventcard = await Eventcard.findById(req.params.id);
@@ -143,7 +133,7 @@ router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
     req.flash('danger', 'Not exist event');
     return res.redirect('back');
   }
-// 후기 남기기
+
   var answer = new Answer({
     author: user,
     eventcard_id: eventcard.id,

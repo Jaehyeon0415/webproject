@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/user');
-const Eventcard = require('../routes/eventcards')
+const Eventcard = require('../models/eventcard')
+const Answer = require('../models/answer')
 const catchErrors = require('../lib/async-error');
 
 function needAuth(req, res, next) {
@@ -57,6 +58,11 @@ router.get('/new', (req, res, next) => {
   res.render('users/new', {messages: req.flash()});
 });
 
+router.get('/root', needAuth, catchErrors(async (req, res, next) =>{
+  const users = await User.find({});
+  res.render('users/root', {users: users});
+}));
+
 router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   res.render('users/edit', {user: user});
@@ -92,8 +98,11 @@ router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
 
 // 사용자 정보를 지워줌
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
-  const user = await User.findOneAndRemove({_id: req.params.id});
-  const userEventcard = await Eventcard.findOneAndRemove({eventcard_id: req.params.id})
+  
+  var user = await User.findById(req.params.id);
+  await Eventcard.findOneAndRemove({author:user._id});
+  await Answer.findOneAndRemove({author:user._id});
+  await user.remove();
   req.flash('success', 'Deleted Successfully.');
   res.redirect('/users');
 }));

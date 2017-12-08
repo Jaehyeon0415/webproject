@@ -12,8 +12,9 @@ block content
                     .card-body
                         p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
                         p #{eventcard.locate}
-                        a.btn.btn-primary(href=`/mypage/${eventcard._id}/edit`) 수정
-                        a.btn.btn-danger.top(href=`/mypage/${eventcard._id}?_method=DELETE`) 삭제
+                        a.btn.btn-primary.m-1(href=`/mypage/${eventcard._id}/edit`) edit
+                        a.btn.btn-danger.top.m-1(href=`/mypage/${eventcard._id}?_method=DELETE`) delete
+                        a.button.btn.btn-warning.m-1(href="#") Register List
 
     .row.col-lg-6.col-md-6.col-sm-12.float-right.mr-1
         h2.col-10.mt-3 Favorite

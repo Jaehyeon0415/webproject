@@ -156,18 +156,19 @@ html(lan="ko")
             .mx-auto.border.border-left-0.border-right-0.border-top-0
                     h1.show-needMargin.mb-4 후기
                     |
-                    .col-lg-12.border.comment.mx-auto
+                    .col-lg-12.comment.mx-auto
                         each answer in answers
-                            .col-lg-10.m-3.border.comment.mx-auto
+                            .col-lg-12.m-3.border.comment.mx-auto
                                 p=answer.author.name
                                 p.ml-4.mt-2=answer.content
+                    |
                     .col-10.mx-auto.m-2
                         h3.show-needMarginBtn 후기 남기기
                         |    
                         form(action=`${eventcard._id}/answers/` method='post')
                             input.border.border-dark.col-lg-6(type='text', name='content')
                             button.btn.btn-outline-primary.mt-3(type="submit")
-                                |제출
+                                | Post
             
             .mx-auto.border.border-left-0.border-right-0.border-top-0
                 button.btn.btn-outline-primary.m-2(type="submit") Register
