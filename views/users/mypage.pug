@@ -6,7 +6,6 @@ block content
         each eventcard in eventcards
             .col.col-lg-12.col-md-12.col-sm-12.mx-auto
                 .card.mb-4.mt-4
-                    img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
                     h1.ml-3
                         a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
                     .card-body
@@ -20,7 +19,6 @@ block content
         h2.col-10.mt-3 Favorite
         .col.col-lg-12.col-md-12.col-sm-12.mx-auto
             .card.mb-4.mt-4
-                img.card-img-top.mx-auto(src='', alt='Card image cap')
                 h1.ml-3
                     p Test입니다.
                     //- a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title

@@ -11,7 +11,7 @@ block content
             | Events
       .row.col-lg-12.col-md-12.col-sm-12.mx-auto
           each eventcard in eventcards
-            .card.col-lg-4.col-md-6.col-sm-12.mx-auto
+            .card.col-lg-4.col-md-6.col-sm-12.mx-auto.m-3
               h1
                 a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
               .card-body
@@ -20,16 +20,6 @@ block content
                   p #{eventcard.locate}
                   |
                   p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
-              
-            //- .card.mb-4
-            //-   //img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
-            //-   h1.ml-3
-            //-     a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
-            //-   .card-body
-                
-            //-     p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
-            //-     p #{eventcard.locate}
-            //-     p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
 
       +paginate(eventcards, '/eventcards', query)
 
