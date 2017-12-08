@@ -14,13 +14,14 @@ block content
           each eventcard in eventcards
             h1
               a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
-                .col-sm
-                  p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
-                .col-sm
-                  p #{eventcard.locate}
-                .col-sm
-                  p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
-            
+            .card-body
+              .col-sm
+                p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+              .col-sm
+                p #{eventcard.locate}
+              .col-sm
+                p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
+              
             //- .card.mb-4
             //-   //img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
             //-   h1.ml-3
