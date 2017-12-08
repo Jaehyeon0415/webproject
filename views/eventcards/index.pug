@@ -9,18 +9,23 @@ block content
         .col.col-12.mt-3
           h1.main-title
             | Events
-      .row.col-12.mx-auto
+      .row.mx-auto
         each eventcard in eventcards
-          .col.col-lg-4.col-md-6.col-sm-12.mx-auto
-            .card.mb-4
-              img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
-              h1.ml-3
-                a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
-              .card-body
+          .col-sm
+            p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+          .col-sm
+            p #{eventcard.locate}
+          .col-sm
+            p 작성일자 : #{eventcard.createdAt}
+            
+            //- .card.mb-4
+            //-   //img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
+            //-   h1.ml-3
+            //-     a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
+            //-   .card-body
                 
-                p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
-                p #{eventcard.locate}
-                  //include _question
+            //-     p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+            //-     p #{eventcard.locate}
 
       +paginate(eventcards, '/eventcards', query)
 
