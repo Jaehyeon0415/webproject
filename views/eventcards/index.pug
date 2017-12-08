@@ -9,18 +9,17 @@ block content
         .col.col-12.mt-3
           h1.main-title
             | Events
-      .row.mx-auto
-        .card
+      .row.col-lg-12.col-md-12.col-sm-12.mx-auto
           each eventcard in eventcards
-            h1
-              a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
-            .card-body
-              .col-sm
-                p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
-              .col-sm
-                p #{eventcard.locate}
-              .col-sm
-                p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
+            .card.col-lg-4.col-md-6.col-sm-12.mx-auto
+              h1
+                a.title(href=`/eventcards/${eventcard.id}`)= eventcard.title
+              .card-body
+                  p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
+                  |
+                  p #{eventcard.locate}
+                  |
+                  p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
               
             //- .card.mb-4
             //-   //img.card-img-top.mx-auto(src=eventcard.img, alt='Card image cap')
@@ -30,6 +29,7 @@ block content
                 
             //-     p #{eventcard.date} / #{eventcard.start_time} ~ #{eventcard.finish_time}
             //-     p #{eventcard.locate}
+            //-     p updated on : #{moment(eventcard.createdAt).format('YYYY-MM-DD')}
 
       +paginate(eventcards, '/eventcards', query)
 
