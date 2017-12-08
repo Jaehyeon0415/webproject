@@ -41,20 +41,20 @@ html(lan="ko")
                             | SignUp
                 else
                     li.nav-item.active.dropdown
-                    button.btn.btn-dark.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
-                        | Myprofile
-                    |
-                    if(currentUser.name != "root")
-                        .dropdown-menu(aria-labelledby="dropdownMenuButton")
-                            a.dropdown-item(href=`/users/${currentUser._id}`) ID
-                            a.dropdown-item(href='/eventcards/new') Create Event
-                            a.dropdown-item(href='/mypage') Mypage
-                    else
-                        .dropdown-menu(aria-labelledby="dropdownMenuButton")
-                            a.dropdown-item(href=`/users/${currentUser._id}`) ID
-                            a.dropdown-item(href='/eventcards/new') Create Event
-                            a.dropdown-item(href='/mypage') Mypage
-                            a.dropdown-item(href='#') Register List
+                        button.btn.btn-dark.dropdown-toggle#dropdownMenuButton(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                            | Myprofile
+                        |
+                        if(currentUser.name != "root")
+                            .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                                a.dropdown-item(href=`/users/${currentUser._id}`) ID
+                                a.dropdown-item(href='/eventcards/new') Create Event
+                                a.dropdown-item(href='/mypage') Mypage
+                        else
+                            .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                                a.dropdown-item(href=`/users/${currentUser._id}`) ID
+                                a.dropdown-item(href='/eventcards/new') Create Event
+                                a.dropdown-item(href='/mypage') Mypage
+                                a.dropdown-item(href='#') Register List
                     li.nav-item.active
                         |
                         a.nav-link(href='/signout')
